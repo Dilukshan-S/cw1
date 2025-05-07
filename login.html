@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f4f4;
+            padding: 30px;
+        }
+        .container {
+            max-width: 500px;
+            margin-top: 50px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .alert {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" method="POST">
+        <h2 class="text-center">User Login</h2>
+        <div class="alert alert-success" id="login-success"></div>
+        <div class="alert alert-danger" id="login-error"></div>
+
+        <form id="login-form">
+            <div class="form-group">
+                <input type="text" id="login-username" class="form-control" placeholder="Username" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="login-password" class="form-control" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn btn-success btn-block">Login</button>
+        </form>
+
+        <hr>
+        <p class="text-center">Don't have an account? <a href="Frontend.html">Register here</a></p>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Login User (POST Request)
+        document.getElementById('login-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+    
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+
+            const response = await fetch('http://127.0.0.1:5000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+    const result = await response.json();
+
+    if (response.ok) {
+        document.getElementById('login-success').innerText = result.message;
+        document.getElementById('login-success').style.display = 'block';
+        document.getElementById('login-error').style.display = 'none';
+        
+        // Redirect the user to the countries page
+        window.location.href = 'http://127.0.0.1:5000/countries';
+    } else {
+        document.getElementById('login-error').innerText = result.error;
+        document.getElementById('login-error').style.display = 'block';
+        document.getElementById('login-success').style.display = 'none';
+    }
+});
+    </script>
+
+</body>
+</html>
