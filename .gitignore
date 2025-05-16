@@ -1,0 +1,26 @@
+# --- Python (backend) ---
+backend/venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.log
+
+# --- Pip dependencies ---
+backend/.env
+*.env
+
+# --- Node.js (frontend) ---
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+
+# --- OS/System files ---
+.DS_Store
+Thumbs.db
+
+# --- VS Code/IDE ---
+.vscode/
+.idea/
+
+# --- Docker ---
+**/.dockerignore
