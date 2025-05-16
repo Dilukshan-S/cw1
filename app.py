@@ -1,8 +1,9 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
 import requests
 import bcrypt
 import sqlite3
+import os
 
 # Initialize the Flask application
 app = Flask(__name__)
@@ -27,7 +28,16 @@ def init_db():
 # Initialize the database
 init_db()
 
-# Define the route for getting country data
+# Serve the frontend HTML pages
+@app.route('/')
+def serve_frontend():
+    return send_from_directory(os.getcwd(), 'frontend.html')
+
+@app.route('/login')
+def serve_login():
+    return send_from_directory(os.getcwd(), 'login.html')
+
+# Define the route for getting country data (rendering HTML page with data)
 @app.route('/countries', methods=['GET'])
 def get_country_data():
     url = 'https://restcountries.com/v3.1/all'  # Endpoint for all countries
@@ -51,7 +61,8 @@ def get_country_data():
                 "flag": country["flags"]["png"]
             })
 
-        return jsonify(country_info)
+        # Render the HTML page with the country data
+        return render_template('countries.html', countries=country_info)
 
     except requests.exceptions.RequestException as e:
         # Handle request errors such as network issues
@@ -95,7 +106,6 @@ def login_user():
         return jsonify({"message": "Login successful"}), 200
     else:
         return jsonify({"error": "Invalid credentials"}), 401
-
 
 # Run the Flask app
 if __name__ == '__main__':
