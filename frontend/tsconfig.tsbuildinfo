@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/api.ts","./src/main.tsx","./src/vite-env.d.ts","./src/components/header.tsx","./src/components/privateroute.tsx","./src/pages/apikeys.tsx","./src/pages/countries.tsx","./src/pages/login.tsx","./src/pages/register.tsx","./src/types/country.ts"],"errors":true,"version":"5.8.3"}
